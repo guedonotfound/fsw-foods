@@ -5,7 +5,9 @@ const Home = () => {
   return (
     <>
       <Header />
-      <Search />
+      <div className="px-5 pt-6">
+        <Search />
+      </div>
     </>
   );
 };
