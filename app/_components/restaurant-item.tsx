@@ -12,7 +12,7 @@ interface RestaurantItemProps {
 const RestaurantItem = ({ restaurant }: RestaurantItemProps) => {
   return (
     <Link
-      href={`/restaurant/${restaurant.id}`}
+      href={`/restaurants/${restaurant.id}`}
       className="w-[266px] min-w-[266px]"
     >
       <div className="w-full space-y-3">
