@@ -8,14 +8,19 @@ import { formatCurrency } from "../_helpers/price";
 import { Separator } from "./ui/separator";
 import { Button } from "./ui/button";
 import { Dispatch, SetStateAction } from "react"; // Importe isso para tipagem
+import { useRouter } from "next/navigation";
 
 interface CartProps {
   setIsCartOpen: Dispatch<SetStateAction<boolean>>; // Defina o tipo para setIsCartOpen
 }
 
 const Cart: React.FC<CartProps> = ({ setIsCartOpen }) => {
+  const router = useRouter();
   const { products, subtotalPrice, totalPrice, totalDiscounts } =
     useContext(CartContext);
+
+  const handleGoToRestaurantClick = () =>
+    router.push(`/restaurants/${products[0].restaurantId}`);
 
   return (
     <div className="flex h-full flex-col py-5">
@@ -25,6 +30,13 @@ const Cart: React.FC<CartProps> = ({ setIsCartOpen }) => {
             {products.map((product) => (
               <CartItem key={product.id} cartProduct={product} />
             ))}
+            <Button
+              onClick={handleGoToRestaurantClick}
+              className="mt-20 w-full border border-solid border-muted-foreground"
+              variant="ghost"
+            >
+              Ir para o restaurante
+            </Button>
           </div>
 
           {/* TOTAIS */}

@@ -60,12 +60,10 @@ const ProductDetails = ({
   };
 
   const handleAddToCartClick = () => {
-    //VERIFICAR SE HÁ PRODUTO DE OUTRO RESTAURANTE NO CARRINHO
     const hasDifferentRestaurantProduct = products.some(
       (cartProduct) => cartProduct.restaurantId !== product.restaurantId,
     );
 
-    //SE HOUVER MOSTRAR UM AVISO
     if (hasDifferentRestaurantProduct) return setIsConfirmationDialogOpen(true);
 
     addToCart({
@@ -75,6 +73,7 @@ const ProductDetails = ({
 
   const handleIncreaseQuantityClick = () =>
     setQuantity((currentState) => currentState + 1);
+
   const handleDecreaseQuantityClick = () =>
     setQuantity((currentState) => {
       if (currentState === 1) return 1;
