@@ -2,17 +2,16 @@
 
 import { notFound, useSearchParams } from "next/navigation";
 import { searchForRestaurants } from "./_actions/search";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { Restaurant } from "@prisma/client";
 import Header from "../_components/header";
 import RestaurantItem from "../_components/restaurant-item";
 
 const Restaurants = () => {
-  const SearchParams = useSearchParams();
-
+  const searchParams = useSearchParams();
   const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
+  const searchFor = searchParams.get("search");
 
-  const searchFor = SearchParams.get("search");
   useEffect(() => {
     const fetchRestaurants = async () => {
       if (!searchFor) return;
@@ -46,4 +45,11 @@ const Restaurants = () => {
   );
 };
 
-export default Restaurants;
+// Envolvendo o componente em Suspense
+export default function RestaurantsPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <Restaurants />
+    </Suspense>
+  );
+}
