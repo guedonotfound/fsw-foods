@@ -26,21 +26,21 @@ const Cart: React.FC<CartProps> = ({ setIsCartOpen }) => {
     <div className="flex h-full flex-col py-5">
       {products.length > 0 ? (
         <>
-          <div className="flex-auto space-y-4">
+          <div className="h-px flex-auto space-y-4 overflow-y-scroll [&::-webkit-scrollbar]:hidden">
             {products.map((product) => (
               <CartItem key={product.id} cartProduct={product} />
             ))}
-            <Button
-              onClick={handleGoToRestaurantClick}
-              className="mt-20 w-full border border-solid border-muted-foreground"
-              variant="ghost"
-            >
-              Ir para o restaurante
-            </Button>
           </div>
+          <Button
+            onClick={handleGoToRestaurantClick}
+            className="mt-2 w-full border border-solid border-muted-foreground"
+            variant="ghost"
+          >
+            Ir para o restaurante
+          </Button>
 
           {/* TOTAIS */}
-          <div className="mt-6">
+          <div className="mt-6 h-[209px]">
             <Card>
               <CardContent className="space-y-2 p-5">
                 <div className="flex items-center justify-between text-xs">
@@ -80,9 +80,9 @@ const Cart: React.FC<CartProps> = ({ setIsCartOpen }) => {
                 </div>
               </CardContent>
             </Card>
+            <Button className="mt-2 w-full">Finalizar pedido</Button>
+            {/* BOTÃO CONFIRMAR */}
           </div>
-          {/* BOTÃO CONFIRMAR */}
-          <Button className="mt-2 w-full">Finalizar pedido</Button>
         </>
       ) : (
         <>
