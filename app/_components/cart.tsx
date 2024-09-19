@@ -11,7 +11,7 @@ import { Dispatch, SetStateAction } from "react"; // Importe isso para tipagem
 import { useRouter } from "next/navigation";
 
 interface CartProps {
-  setIsCartOpen: Dispatch<SetStateAction<boolean>>; // Defina o tipo para setIsCartOpen
+  setIsCartOpen?: Dispatch<SetStateAction<boolean>>; // Defina o tipo para setIsCartOpen
 }
 
 const Cart: React.FC<CartProps> = ({ setIsCartOpen }) => {
@@ -26,7 +26,7 @@ const Cart: React.FC<CartProps> = ({ setIsCartOpen }) => {
     <div className="flex h-full flex-col py-5">
       {products.length > 0 ? (
         <>
-          <div className="h flex-auto space-y-4">
+          <div className="flex-auto space-y-4">
             {products.map((product) => (
               <CartItem key={product.id} cartProduct={product} />
             ))}
@@ -87,7 +87,10 @@ const Cart: React.FC<CartProps> = ({ setIsCartOpen }) => {
       ) : (
         <>
           <h2 className="font-medium">Sua sacola está vazia.</h2>
-          <Button onClick={() => setIsCartOpen(false)} className="mt-10">
+          <Button
+            onClick={() => setIsCartOpen && setIsCartOpen(false)}
+            className="mt-10"
+          >
             Fechar
           </Button>
         </>
