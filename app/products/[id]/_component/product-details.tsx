@@ -54,8 +54,8 @@ const ProductDetails = ({
     useState(false);
   const { addProductToCart, products } = useContext(CartContext);
 
-  const addToCart = () => {
-    addProductToCart(product, quantity);
+  const addToCart = ({ emptyCart }: { emptyCart?: boolean }) => {
+    addProductToCart({ product, quantity, emptyCart });
     setIsCartOpen(true);
   };
 
@@ -68,7 +68,9 @@ const ProductDetails = ({
     //SE HOUVER MOSTRAR UM AVISO
     if (hasDifferentRestaurantProduct) return setIsConfirmationDialogOpen(true);
 
-    addToCart();
+    addToCart({
+      emptyCart: false,
+    });
   };
 
   const handleIncreaseQuantityClick = () =>
@@ -122,7 +124,7 @@ const ProductDetails = ({
           </div>
 
           {/* QUANTIDADE */}
-          <div className="flex items-center gap-3 text-center">
+          <div className="flex items-center text-center">
             <Button
               variant="ghost"
               size="icon"
@@ -131,7 +133,7 @@ const ProductDetails = ({
             >
               <ChevronLeftIcon />
             </Button>
-            <span className="w-4">{quantity}</span>
+            <span className="w-10">{quantity}</span>
             <Button size="icon" onClick={handleIncreaseQuantityClick}>
               <ChevronRightIcon />
             </Button>
@@ -166,11 +168,13 @@ const ProductDetails = ({
         </div>
       </div>
       <Sheet open={isCartOpen} onOpenChange={setIsCartOpen}>
-        <SheetContent className="w-[85vw]">
+        <SheetContent className="flex w-[85vw] flex-col">
           <SheetHeader>
             <SheetTitle className="text-left">Sacola</SheetTitle>
           </SheetHeader>
-          <Cart />
+          <div className="flex-auto">
+            <Cart setIsCartOpen={setIsCartOpen} />
+          </div>
         </SheetContent>
       </Sheet>
       <AlertDialog
@@ -188,7 +192,7 @@ const ProductDetails = ({
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancelar</AlertDialogCancel>
-            <AlertDialogAction onClick={addToCart}>
+            <AlertDialogAction onClick={() => addToCart({ emptyCart: true })}>
               Esvaziar sacola e adicionar
             </AlertDialogAction>
           </AlertDialogFooter>
