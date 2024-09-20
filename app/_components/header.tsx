@@ -85,13 +85,15 @@ const Header = () => {
               <HomeIcon size={16} />
               <span className="block">Início</span>
             </Button>
-            <Button
-              variant="ghost"
-              className="w-full justify-start gap-3 rounded-full text-sm font-normal"
-            >
-              <ScrollTextIcon size={16} />
-              <span className="block">Meus pedidos</span>
-            </Button>
+            <Link href="/my-orders">
+              <Button
+                variant="ghost"
+                className="w-full justify-start gap-3 rounded-full text-sm font-normal"
+              >
+                <ScrollTextIcon size={16} />
+                <span className="block">Meus pedidos</span>
+              </Button>
+            </Link>
             <Button
               variant="ghost"
               className="w-full justify-start gap-3 rounded-full text-sm font-normal"
