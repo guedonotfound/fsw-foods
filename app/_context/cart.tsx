@@ -7,7 +7,15 @@ import { calculateProductTotalPrice } from "../_helpers/price";
 
 export interface CartProduct
   extends Prisma.ProductGetPayload<{
-    include: { restaurant: { select: { deliveryFee: true } } };
+    include: {
+      restaurant: {
+        select: {
+          id: true;
+          deliveryFee: true;
+          deliveryTimeMinutes: true;
+        };
+      };
+    };
   }> {
   quantity: number;
 }
@@ -24,7 +32,15 @@ interface ICartContext {
     emptyCart,
   }: {
     product: Prisma.ProductGetPayload<{
-      include: { restaurant: { select: { deliveryFee: true } } };
+      include: {
+        restaurant: {
+          select: {
+            id: true;
+            deliveryFee: true;
+            deliveryTimeMinutes: true;
+          };
+        };
+      };
     }>;
     quantity: number;
     emptyCart?: boolean;
@@ -32,6 +48,7 @@ interface ICartContext {
   decreaseProductQuantity: (productId: string) => void;
   increaseProductQuantity: (productId: string) => void;
   removeProductFromCart: (productId: string) => void;
+  clearCart: () => void;
 }
 
 export const CartContext = createContext<ICartContext>({
@@ -44,6 +61,7 @@ export const CartContext = createContext<ICartContext>({
   decreaseProductQuantity: () => {},
   increaseProductQuantity: () => {},
   removeProductFromCart: () => {},
+  clearCart: () => {},
 });
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
@@ -71,6 +89,10 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
   const totalDiscounts =
     subtotalPrice - totalPrice + Number(products?.[0]?.restaurant.deliveryFee);
+
+  const clearCart = () => {
+    return setProducts([]);
+  };
 
   const decreaseProductQuantity = (productId: string) => {
     return setProducts((prev) =>
@@ -107,7 +129,11 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     emptyCart,
   }: {
     product: Prisma.ProductGetPayload<{
-      include: { restaurant: { select: { deliveryFee: true } } };
+      include: {
+        restaurant: {
+          select: { id: true; deliveryFee: true; deliveryTimeMinutes: true };
+        };
+      };
     }>;
     quantity: number;
     emptyCart?: boolean;
@@ -134,7 +160,19 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
       );
     }
 
-    setProducts((prev) => [...prev, { ...product, quantity: quantity }]);
+    setProducts((prev) => [
+      ...prev,
+      {
+        ...product,
+        restaurant: {
+          ...product.restaurant,
+          id: product.restaurant.id,
+          deliveryFee: product.restaurant.deliveryFee,
+          deliveryTimeMinutes: product.restaurant.deliveryTimeMinutes,
+        },
+        quantity: quantity,
+      },
+    ]);
   };
 
   const removeProductFromCart = (productId: string) => {
@@ -151,6 +189,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         totalPrice,
         totalQuantity,
         totalDiscounts,
+        clearCart,
         addProductToCart,
         decreaseProductQuantity,
         increaseProductQuantity,
