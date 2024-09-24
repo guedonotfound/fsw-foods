@@ -4,6 +4,7 @@ import { Avatar, AvatarImage } from "@/app/_components/ui/avatar";
 import { Button } from "@/app/_components/ui/button";
 import { Card, CardContent } from "@/app/_components/ui/card";
 import { Separator } from "@/app/_components/ui/separator";
+import { CartContext } from "@/app/_context/cart";
 import { formatCurrency } from "@/app/_helpers/price";
 import { OrderStatus, Prisma } from "@prisma/client";
 import {
@@ -14,6 +15,8 @@ import {
   ClockIcon,
   XCircleIcon,
 } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useContext } from "react";
 
 interface OrderItemProps {
   order: Prisma.OrderGetPayload<{
@@ -65,6 +68,20 @@ const getOrderStatus = (status: OrderStatus) => {
 };
 
 const OrderItem = ({ order }: OrderItemProps) => {
+  const router = useRouter();
+
+  const { addProductToCart } = useContext(CartContext);
+
+  const handleRedoOrder = () => {
+    for (const orderProduct of order.products) {
+      addProductToCart({
+        product: { ...orderProduct.product, restaurant: order.restaurant },
+        quantity: orderProduct.quantity,
+      });
+    }
+    router.push(`/restaurants/${order.restaurantId}`);
+  };
+
   return (
     <Card>
       <CardContent className="p-5 pt-3">
@@ -121,6 +138,7 @@ const OrderItem = ({ order }: OrderItemProps) => {
             size="sm"
             className="text-xs"
             disabled={order.status !== "COMPLETED"}
+            onClick={handleRedoOrder}
           >
             Refazer pedido
           </Button>
