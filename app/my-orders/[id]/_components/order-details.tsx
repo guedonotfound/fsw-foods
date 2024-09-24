@@ -7,7 +7,7 @@ import { formatCurrency } from "@/app/_helpers/price";
 import { Prisma } from "@prisma/client";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
-import { ChevronLeftIcon } from "lucide-react";
+import { ChevronLeftIcon, CircleAlertIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -80,7 +80,7 @@ const OrderDetails = ({ order }: OrderDetailsProps) => {
               </Button>
             </div>
             <h3 className="text-sm text-muted-foreground">
-              Pedido nº {order.id.replace(/\D/g, "")}
+              Pedido nº {order.orderNumber}
             </h3>
             <h3 className="text-sm text-muted-foreground">
               {format(new Date(order.createdAt), "dd/MM/yyyy 'às' HH:mm", {
@@ -115,14 +115,12 @@ const OrderDetails = ({ order }: OrderDetailsProps) => {
                 <div>
                   <h3 className="font-semibold">{product.product.name}</h3>
                   <h3 className="text-sm">
-                    {formatCurrency(Number(product.product.price))}
+                    {formatCurrency(Number(product.price))}
                   </h3>
                 </div>
 
                 <h3>
-                  {formatCurrency(
-                    Number(product.product.price) * product.quantity,
-                  )}
+                  {formatCurrency(Number(product.price) * product.quantity)}
                 </h3>
               </div>
             </div>
@@ -130,15 +128,24 @@ const OrderDetails = ({ order }: OrderDetailsProps) => {
         </div>
 
         <div className="pt-6">
-          <h3 className="font-semibold">Resumo dos valores</h3>
+          <div className="space-y-0">
+            <span className="font-semibold">Resumo dos valores</span>
+            <div className="mt-0 flex items-center gap-0.5 text-xs text-primary">
+              <CircleAlertIcon size={10} />
+              <span>Preços com base na data do pedido</span>
+            </div>
+          </div>
+
           <div className="flex items-center justify-between pt-2 text-sm text-muted-foreground">
             <span>Subtotal</span>
             <span>{formatCurrency(Number(order.subtotalPrice))}</span>
           </div>
+
           <div className="flex items-center justify-between text-sm text-muted-foreground">
             <span>Descontos</span>
             <span>-{formatCurrency(Number(order.totalDiscounts))}</span>
           </div>
+
           <div className="flex items-center justify-between text-sm text-muted-foreground">
             <span>Taxa de entrega</span>
             {Number(order.deliveryFee) === 0 ? (
@@ -149,11 +156,13 @@ const OrderDetails = ({ order }: OrderDetailsProps) => {
               <span>{formatCurrency(Number(order.deliveryFee))}</span>
             )}
           </div>
+
           <div className="flex items-center justify-between font-semibold">
             <span>Total</span>
             <span>{formatCurrency(Number(order.totalPrice))}</span>
           </div>
         </div>
+
         <div className="py-6">
           <Separator />
         </div>

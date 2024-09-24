@@ -70,6 +70,8 @@ const Cart: React.FC<CartProps> = ({ setIsCartOpen }) => {
             data: products.map((product) => ({
               productId: product.id,
               quantity: product.quantity,
+              price: product.price,
+              discountPercentage: product.discountPercentage,
             })),
           },
         },

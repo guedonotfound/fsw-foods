@@ -1,6 +1,6 @@
 import { db } from "@/app/_lib/prisma";
 import { notFound } from "next/navigation";
-import OrderDetails from "../_components/order-details";
+import OrderDetails from "./_components/order-details";
 
 interface OrderDetailsPageProps {
   params: {
