@@ -79,7 +79,7 @@ const OrderDetails = ({ order }: OrderDetailsProps) => {
                 </Link>
               </Button>
             </div>
-            <h3 className="text-sm font-semibold text-muted-foreground">
+            <h3 className="text-sm text-muted-foreground">
               Pedido nº {order.id.replace(/\D/g, "")}
             </h3>
             <h3 className="text-sm text-muted-foreground">
