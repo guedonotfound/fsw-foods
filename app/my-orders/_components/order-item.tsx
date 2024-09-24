@@ -16,7 +16,10 @@ import {
   XCircleIcon,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { format } from "date-fns";
+import { ptBR } from "date-fns/locale";
 import { useContext } from "react";
+import ProductList from "./product-list";
 
 interface OrderItemProps {
   order: Prisma.OrderGetPayload<{
@@ -72,6 +75,24 @@ const OrderItem = ({ order }: OrderItemProps) => {
 
   const { addProductToCart } = useContext(CartContext);
 
+  const orderStatus = getOrderStatus(order.status);
+
+  const diasAbreviados: { [key: string]: string } = {
+    "segunda-feira": "Seg.",
+    "terça-feira": "Ter.",
+    "quarta-feira": "Qua.",
+    "quinta-feira": "Qui.",
+    "sexta-feira": "Sex.",
+    sábado: "Sáb.",
+    domingo: "Dom.",
+  };
+
+  const customFormat = (date: Date) => {
+    const diaCompleto = format(date, "EEEE", { locale: ptBR }).toLowerCase();
+    const diaAbreviado = diasAbreviados[diaCompleto] || diaCompleto;
+    return `${diaAbreviado} ${format(date, "dd 'de' MMMM 'de' yyyy", { locale: ptBR })}`;
+  };
+
   const handleRedoOrder = () => {
     for (const orderProduct of order.products) {
       addProductToCart({
@@ -95,17 +116,27 @@ const OrderItem = ({ order }: OrderItemProps) => {
             </span>
           </div>
 
-          <Button variant="link" size="icon" className="h-5 w-5 text-black">
+          <Button
+            variant="link"
+            size="icon"
+            className="h-5 w-5 text-black"
+            onClick={() => router.push(`/my-orders/${order.id}`)}
+          >
             <ChevronRightIcon />
           </Button>
         </div>
 
-        <div
-          className={`flex h-5 w-fit items-center gap-1 rounded-full px-2 text-white ${getOrderStatus(order.status).color}`}
-        >
-          {getOrderStatus(order.status).icon}
-          <span className="block text-xs font-semibold">
-            {getOrderStatus(order.status).label}
+        <div className="flex items-center justify-between">
+          <div
+            className={`flex h-5 w-fit items-center gap-1 rounded-full px-2 text-white ${orderStatus.color}`}
+          >
+            {orderStatus.icon}
+            <span className="block text-xs font-semibold">
+              {orderStatus.label}
+            </span>
+          </div>
+          <span className="text-xs text-muted-foreground">
+            {customFormat(new Date(order.createdAt))}
           </span>
         </div>
 
@@ -113,18 +144,7 @@ const OrderItem = ({ order }: OrderItemProps) => {
           <Separator />
         </div>
 
-        {order.products.map((product) => (
-          <div key={product.id} className="flex items-center gap-2 py-[2px]">
-            <div className="flex h-5 w-5 items-center justify-center rounded-full bg-muted-foreground">
-              <span className="block text-xs text-white">
-                {product.quantity}
-              </span>
-            </div>
-            <span className="text-xs text-muted-foreground">
-              {product.product.name}
-            </span>
-          </div>
-        ))}
+        <ProductList products={order.products} />
 
         <div className="py-3">
           <Separator />

@@ -23,6 +23,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "./ui/alert-dialog";
+import { toast } from "sonner";
 
 interface CartProps {
   setIsCartOpen?: Dispatch<SetStateAction<boolean>>;
@@ -75,6 +76,13 @@ const Cart: React.FC<CartProps> = ({ setIsCartOpen }) => {
       });
 
       clearCart();
+      toast("Pedido realizado", {
+        description: "O pedido foi enviado ao restaurante",
+        action: {
+          label: "Ver pedidos",
+          onClick: () => router.push("/my-orders"),
+        },
+      });
     } catch (error) {
       console.log(error);
     } finally {
