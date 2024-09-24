@@ -7,7 +7,6 @@ import { Card, CardContent } from "./ui/card";
 import { formatCurrency } from "../_helpers/price";
 import { Separator } from "./ui/separator";
 import { Button } from "./ui/button";
-import { Dispatch, SetStateAction } from "react";
 import { useRouter } from "next/navigation";
 import { createOrder } from "../_actions/order";
 import { OrderStatus } from "@prisma/client";
@@ -26,10 +25,12 @@ import {
 import { toast } from "sonner";
 
 interface CartProps {
-  setIsCartOpen?: Dispatch<SetStateAction<boolean>>;
+  // eslint-disable-next-line no-unused-vars
+  setIsOpen: (isOpen: boolean) => void;
 }
 
-const Cart: React.FC<CartProps> = ({ setIsCartOpen }) => {
+const Cart = ({ setIsOpen }: CartProps) => {
+  console.log(setIsOpen);
   const [isSubmitingLoading, setIsSubmitLoading] = useState(false);
 
   const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState(false);
@@ -76,6 +77,7 @@ const Cart: React.FC<CartProps> = ({ setIsCartOpen }) => {
       });
 
       clearCart();
+      setIsOpen(false);
       toast("Pedido realizado", {
         description: "O pedido foi enviado ao restaurante",
         action: {
@@ -168,10 +170,7 @@ const Cart: React.FC<CartProps> = ({ setIsCartOpen }) => {
         ) : (
           <>
             <h2 className="font-medium">Sua sacola está vazia.</h2>
-            <Button
-              onClick={() => setIsCartOpen && setIsCartOpen(false)}
-              className="mt-10"
-            >
+            <Button onClick={() => setIsOpen(false)} className="mt-10">
               Fechar
             </Button>
           </>
