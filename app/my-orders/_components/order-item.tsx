@@ -20,6 +20,7 @@ import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { useContext } from "react";
 import ProductList from "./product-list";
+import Link from "next/link";
 
 interface OrderItemProps {
   order: Prisma.OrderGetPayload<{
@@ -116,13 +117,10 @@ const OrderItem = ({ order }: OrderItemProps) => {
             </span>
           </div>
 
-          <Button
-            variant="link"
-            size="icon"
-            className="h-5 w-5 text-black"
-            onClick={() => router.push(`/my-orders/${order.id}`)}
-          >
-            <ChevronRightIcon />
+          <Button variant="link" size="icon" className="h-5 w-5 text-black">
+            <Link href={`/my-orders/${order.id}`}>
+              <ChevronRightIcon />
+            </Link>
           </Button>
         </div>
 

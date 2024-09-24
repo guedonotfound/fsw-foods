@@ -1,6 +1,6 @@
 import { db } from "@/app/_lib/prisma";
-import ProductList from "../_components/product-list";
 import { notFound } from "next/navigation";
+import OrderDetails from "../_components/order-details";
 
 interface OrderDetailsPageProps {
   params: {
@@ -23,11 +23,13 @@ const OrderDetailsPage = async ({ params: { id } }: OrderDetailsPageProps) => {
     },
   });
 
+  console.log(order);
+
   if (!order) return notFound();
 
   return (
     <>
-      <ProductList products={order.products} />
+      <OrderDetails order={order} />
     </>
   );
 };
