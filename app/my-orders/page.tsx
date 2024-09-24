@@ -3,6 +3,7 @@ import { db } from "../_lib/prisma";
 import { authOptions } from "../_lib/auth";
 import { redirect } from "next/navigation";
 import Header from "../_components/header";
+import OrderItem from "./_components/order-item";
 
 const MyOrdersPage = async () => {
   const session = await getServerSession(authOptions);
@@ -13,6 +14,14 @@ const MyOrdersPage = async () => {
     where: {
       userId: session.user.id,
     },
+    include: {
+      restaurant: true,
+      products: {
+        include: {
+          product: true,
+        },
+      },
+    },
     orderBy: {
       createdAt: "desc",
     },
@@ -21,11 +30,11 @@ const MyOrdersPage = async () => {
     <>
       <Header />
       <div className="px-5 py-6">
-        <h2 className="font-semibold">Meus pedidos</h2>
+        <h2 className="pb-6 text-lg font-semibold">Meus pedidos</h2>
 
-        <div>
+        <div className="space-y-3">
           {orders.map((order) => (
-            <p key={order.id}>{order.id}</p>
+            <OrderItem key={order.id} order={order} />
           ))}
         </div>
       </div>

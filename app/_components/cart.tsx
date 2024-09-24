@@ -7,7 +7,7 @@ import { Card, CardContent } from "./ui/card";
 import { formatCurrency } from "../_helpers/price";
 import { Separator } from "./ui/separator";
 import { Button } from "./ui/button";
-import { Dispatch, SetStateAction } from "react"; // Importe isso para tipagem
+import { Dispatch, SetStateAction } from "react";
 import { useRouter } from "next/navigation";
 import { createOrder } from "../_actions/order";
 import { OrderStatus } from "@prisma/client";
@@ -25,7 +25,7 @@ import {
 } from "./ui/alert-dialog";
 
 interface CartProps {
-  setIsCartOpen?: Dispatch<SetStateAction<boolean>>; // Defina o tipo para setIsCartOpen
+  setIsCartOpen?: Dispatch<SetStateAction<boolean>>;
 }
 
 const Cart: React.FC<CartProps> = ({ setIsCartOpen }) => {
@@ -46,6 +46,7 @@ const Cart: React.FC<CartProps> = ({ setIsCartOpen }) => {
 
     try {
       setIsSubmitLoading(true);
+
       await createOrder({
         subtotalPrice,
         totalDiscounts,
@@ -63,7 +64,16 @@ const Cart: React.FC<CartProps> = ({ setIsCartOpen }) => {
             id: data.user.id,
           },
         },
+        products: {
+          createMany: {
+            data: products.map((product) => ({
+              productId: product.id,
+              quantity: product.quantity,
+            })),
+          },
+        },
       });
+
       clearCart();
     } catch (error) {
       console.log(error);

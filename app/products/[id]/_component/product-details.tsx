@@ -1,6 +1,5 @@
 "use client";
 
-import Cart from "@/app/_components/cart";
 import DeliveryInfo from "@/app/_components/delivery-info";
 import DiscountBadge from "@/app/_components/discount-badge";
 import ProductList from "@/app/_components/product-list";
@@ -15,20 +14,15 @@ import {
   AlertDialogTitle,
 } from "@/app/_components/ui/alert-dialog";
 import { Button } from "@/app/_components/ui/button";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from "@/app/_components/ui/sheet";
 import { CartContext } from "@/app/_context/cart";
 import {
   calculateProductTotalPrice,
   formatCurrency,
 } from "@/app/_helpers/price";
 import { Prisma } from "@prisma/client";
-import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
+import { ChevronLeftIcon, ChevronRightIcon, Loader2 } from "lucide-react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useContext, useState } from "react";
 
 interface ProductDetailsProps {
@@ -49,17 +43,21 @@ const ProductDetails = ({
   complementaryProducts,
 }: ProductDetailsProps) => {
   const [quantity, setQuantity] = useState(1);
-  const [isCartOpen, setIsCartOpen] = useState(false);
+
+  const [isSubmitingLoading, setIsSubmitLoading] = useState(false);
   const [isConfirmationDialogOpen, setIsConfirmationDialogOpen] =
     useState(false);
   const { addProductToCart, products } = useContext(CartContext);
 
+  const router = useRouter();
+
   const addToCart = ({ emptyCart }: { emptyCart?: boolean }) => {
     addProductToCart({ product, quantity, emptyCart });
-    setIsCartOpen(true);
+    router.push(`/restaurants/${product.restaurantId}`);
   };
 
   const handleAddToCartClick = () => {
+    setIsSubmitLoading(true);
     const hasDifferentRestaurantProduct = products.some(
       (cartProduct) => cartProduct.restaurantId !== product.restaurantId,
     );
@@ -69,6 +67,10 @@ const ProductDetails = ({
     addToCart({
       emptyCart: false,
     });
+
+    setIsSubmitLoading(false);
+
+    router.push(`/restaurants/${product.restaurantId}`);
   };
 
   const handleIncreaseQuantityClick = () =>
@@ -161,21 +163,16 @@ const ProductDetails = ({
           <Button
             className="w-full font-semibold"
             onClick={handleAddToCartClick}
+            disabled={isSubmitingLoading}
           >
+            {isSubmitingLoading && (
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            )}
             Adicionar à sacola
           </Button>
         </div>
       </div>
-      <Sheet open={isCartOpen} onOpenChange={setIsCartOpen}>
-        <SheetContent className="flex w-[85vw] flex-col">
-          <SheetHeader>
-            <SheetTitle className="text-left">Sacola</SheetTitle>
-          </SheetHeader>
-          <div className="flex-auto">
-            <Cart setIsCartOpen={setIsCartOpen} />
-          </div>
-        </SheetContent>
-      </Sheet>
+
       <AlertDialog
         open={isConfirmationDialogOpen}
         onOpenChange={setIsConfirmationDialogOpen}
