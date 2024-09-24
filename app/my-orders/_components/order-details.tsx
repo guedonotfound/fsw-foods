@@ -79,10 +79,10 @@ const OrderDetails = ({ order }: OrderDetailsProps) => {
                 </Link>
               </Button>
             </div>
-            <h3 className="text-sm font-semibold">
+            <h3 className="text-sm font-semibold text-muted-foreground">
               Pedido nº {order.id.replace(/\D/g, "")}
             </h3>
-            <h3 className="text-sm">
+            <h3 className="text-sm text-muted-foreground">
               {format(new Date(order.createdAt), "dd/MM/yyyy 'às' HH:mm", {
                 locale: ptBR,
               })}
