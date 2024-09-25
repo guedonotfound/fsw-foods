@@ -7,7 +7,6 @@ import {
   SheetContent,
   SheetHeader,
   SheetTitle,
-  SheetTrigger,
 } from "@/app/_components/ui/sheet";
 import { CartContext } from "@/app/_context/cart";
 import { formatCurrency } from "@/app/_helpers/price";
@@ -21,8 +20,7 @@ interface CartBannerProps {
 const CartBanner = ({ restaurant }: CartBannerProps) => {
   const { products, totalPrice, totalQuantity } = useContext(CartContext);
 
-  // eslint-disable-next-line no-unused-vars
-  const [, setIsOpen] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
   const restaurantHasProductsOnCart = products.some(
     (product) => product.restaurantId === restaurant.id,
@@ -48,16 +46,14 @@ const CartBanner = ({ restaurant }: CartBannerProps) => {
         </div>
 
         {/* BOTÃO */}
-        <Sheet>
-          <SheetTrigger>
-            <Button>Ver sacola</Button>
-          </SheetTrigger>
+        <Button onClick={() => setIsCartOpen(true)}>Ver sacola</Button>
+        <Sheet open={isCartOpen} onOpenChange={setIsCartOpen}>
           <SheetContent className="flex w-[85vw] flex-col">
             <SheetHeader>
               <SheetTitle className="text-left">Sacola</SheetTitle>
             </SheetHeader>
             <div className="flex-auto">
-              <Cart setIsOpen={setIsOpen} />
+              <Cart setIsOpen={setIsCartOpen} />
             </div>
           </SheetContent>
         </Sheet>

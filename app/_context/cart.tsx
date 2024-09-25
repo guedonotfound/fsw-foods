@@ -131,7 +131,11 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     product: Prisma.ProductGetPayload<{
       include: {
         restaurant: {
-          select: { id: true; deliveryFee: true; deliveryTimeMinutes: true };
+          select: {
+            id: true;
+            deliveryFee: true;
+            deliveryTimeMinutes: true;
+          };
         };
       };
     }>;

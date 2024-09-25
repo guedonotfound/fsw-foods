@@ -23,8 +23,6 @@ const OrderDetailsPage = async ({ params: { id } }: OrderDetailsPageProps) => {
     },
   });
 
-  console.log(order);
-
   if (!order) return notFound();
 
   return (
