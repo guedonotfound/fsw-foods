@@ -11,7 +11,7 @@ import {
   ScrollTextIcon,
 } from "lucide-react";
 import Link from "next/link";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import {
   Sheet,
   SheetContent,
@@ -22,6 +22,8 @@ import {
 import { Avatar, AvatarImage } from "./ui/avatar";
 import { Separator } from "./ui/separator";
 import { useRouter } from "next/navigation";
+import SignInDialog from "./sign-in-dialog";
+import { Dialog, DialogContent, DialogTrigger } from "./ui/dialog";
 
 const Header = () => {
   const router = useRouter();
@@ -29,7 +31,6 @@ const Header = () => {
 
   const handleHomeClick = () => router.push("/");
 
-  const handleSightInClick = () => signIn();
   const handleSightOutClick = () => signOut();
 
   return (
@@ -68,9 +69,16 @@ const Header = () => {
           ) : (
             <div className="flex items-center justify-between pt-6">
               <h2 className="font-semibold">Olá, faça seu login!</h2>
-              <Button size="icon" onClick={handleSightInClick}>
-                <LogInIcon />
-              </Button>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button size="icon">
+                    <LogInIcon />
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="w-[90%] rounded-lg">
+                  <SignInDialog />
+                </DialogContent>
+              </Dialog>
             </div>
           )}
 
