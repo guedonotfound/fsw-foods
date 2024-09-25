@@ -12,7 +12,7 @@ import {
 import { CartContext } from "@/app/_context/cart";
 import { formatCurrency } from "@/app/_helpers/price";
 import { Restaurant } from "@prisma/client";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 
 interface CartBannerProps {
   restaurant: Pick<Restaurant, "id">;
@@ -20,6 +20,9 @@ interface CartBannerProps {
 
 const CartBanner = ({ restaurant }: CartBannerProps) => {
   const { products, totalPrice, totalQuantity } = useContext(CartContext);
+
+  // eslint-disable-next-line no-unused-vars
+  const [, setIsOpen] = useState(false);
 
   const restaurantHasProductsOnCart = products.some(
     (product) => product.restaurantId === restaurant.id,
@@ -46,7 +49,7 @@ const CartBanner = ({ restaurant }: CartBannerProps) => {
 
         {/* BOTÃO */}
         <Sheet>
-          <SheetTrigger asChild>
+          <SheetTrigger>
             <Button>Ver sacola</Button>
           </SheetTrigger>
           <SheetContent className="flex w-[85vw] flex-col">
@@ -54,7 +57,7 @@ const CartBanner = ({ restaurant }: CartBannerProps) => {
               <SheetTitle className="text-left">Sacola</SheetTitle>
             </SheetHeader>
             <div className="flex-auto">
-              <Cart />
+              <Cart setIsOpen={setIsOpen} />
             </div>
           </SheetContent>
         </Sheet>
