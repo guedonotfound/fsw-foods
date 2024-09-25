@@ -107,6 +107,12 @@ const ProductDetails = ({
         <div className="flex justify-between px-5">
           {/* PREÇO COM DESCONTO */}
           <div>
+            {/* PREÇO ORIGINAL */}
+            {product.discountPercentage > 0 && (
+              <p className="text-sm text-muted-foreground line-through">
+                De: {formatCurrency(Number(product.price))}
+              </p>
+            )}
             <div className="flex items-center gap-[5px]">
               <h2 className="text-xl font-semibold">
                 {formatCurrency(calculateProductTotalPrice(product))}
@@ -115,13 +121,6 @@ const ProductDetails = ({
                 <DiscountBadge product={product} />
               )}
             </div>
-
-            {/* PREÇO ORIGINAL */}
-            {product.discountPercentage > 0 && (
-              <p className="text-sm text-muted-foreground">
-                De: {formatCurrency(Number(product.price))}
-              </p>
-            )}
           </div>
 
           {/* QUANTIDADE */}
