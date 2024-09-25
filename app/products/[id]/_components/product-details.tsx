@@ -52,7 +52,7 @@ const ProductDetails = ({
   const router = useRouter();
 
   const addToCart = ({ emptyCart }: { emptyCart?: boolean }) => {
-    addProductToCart({ product, quantity, emptyCart });
+    addProductToCart({ product: { ...product, quantity }, emptyCart });
     router.push(`/restaurants/${product.restaurantId}`);
   };
 
