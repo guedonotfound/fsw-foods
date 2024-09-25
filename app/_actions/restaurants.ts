@@ -15,10 +15,12 @@ export const toggleFavoriteRestaurant = async (
   });
 
   if (isFavorite) {
-    await db.userFavoriteRestaurants.deleteMany({
+    await db.userFavoriteRestaurants.delete({
       where: {
-        userId,
-        restaurantId,
+        userId_restaurantId: {
+          userId,
+          restaurantId,
+        },
       },
     });
 
