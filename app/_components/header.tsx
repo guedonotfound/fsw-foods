@@ -98,9 +98,12 @@ const Header = () => {
             <Button
               variant="ghost"
               className="w-full justify-start gap-3 rounded-full text-sm font-normal"
+              asChild
             >
-              <HeartIcon size={16} />
-              <span className="block">Restaurantes favoritos</span>
+              <Link href="/my-favorite-restaurants">
+                <HeartIcon size={16} />
+                <span className="block">Restaurantes favoritos</span>
+              </Link>
             </Button>
           </div>
           <div className="py-6">
