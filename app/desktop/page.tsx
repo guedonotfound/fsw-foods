@@ -1,38 +1,52 @@
-import Image from "next/image";
 import Header from "../_components/desktop/header";
-import Search from "../_components/desktop/search";
+import MainBanner from "../_components/desktop/main-banner";
+import CategoryList from "../_components/desktop/category-list";
+import { Button } from "../_components/ui/button";
+import Link from "next/link";
+import { ChevronRightIcon } from "lucide-react";
+import ProductList from "../_components/desktop/product-list";
+import { db } from "../_lib/prisma";
 
-const DesktopHomePage = () => {
+const DesktopHomePage = async () => {
+  const products = await db.product.findMany({
+    where: {
+      discountPercentage: {
+        gt: 0,
+      },
+    },
+    take: 10,
+    orderBy: {
+      discountPercentage: "desc",
+    },
+    include: {
+      restaurant: {
+        select: {
+          name: true,
+        },
+      },
+    },
+  });
+
   return (
-    <>
+    <div>
       <Header />
+      <div className="space-y-10">
+        <MainBanner />
 
-      <div className="h-[500px] w-full bg-primary pt-[126px]">
-        <div className="flex w-full justify-center gap-[5.07%]">
-          <div className="space-y-8">
-            <div className="text-white">
-              <h1 className="text-5xl font-bold">Está com fome?</h1>
-              <h3 className="text-lg">
-                Com apenas alguns cliques, encontre refeições acessíveis perto
-                de você!
-              </h3>
-            </div>
-            <div className="rounded-lg bg-white p-5">
-              <Search />
-            </div>
-          </div>
+        <CategoryList />
 
-          <div className="relative mt-5 h-[371.03px] w-[371.03px]">
-            <Image
-              src="/home-page-banner.png"
-              alt="Home Page Banner"
-              fill
-              className="object-contain"
-            />
-          </div>
+        <div className="flex items-center justify-between px-[8.89%]">
+          <h2 className="font-semibold">Pedidos recomendados</h2>
+          <Button variant="link" className="h-fit p-0" asChild>
+            <Link href="products/recommended">
+              Ver todos
+              <ChevronRightIcon size={16} />
+            </Link>
+          </Button>
         </div>
+        <ProductList products={products} />
       </div>
-    </>
+    </div>
   );
 };
 
