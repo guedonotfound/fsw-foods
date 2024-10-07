@@ -4,8 +4,8 @@ import { Restaurant, UserFavoriteRestaurants } from "@prisma/client";
 import { notFound, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { searchForRestaurants } from "../_actions/search";
-import Header from "@/app/_components/header";
-import RestaurantItem from "@/app/_components/restaurant-item";
+import Header from "@/app/_components/mobile/header";
+import RestaurantItem from "@/app/_components/mobile/restaurant-item";
 
 interface RestaurantsProps {
   userFavoriteRestaurants: UserFavoriteRestaurants[];

@@ -1,6 +1,6 @@
 "use client";
 
-import Cart from "@/app/_components/cart";
+import Cart from "@/app/_components/mobile/cart";
 import { Button } from "@/app/_components/ui/button";
 import {
   Sheet,

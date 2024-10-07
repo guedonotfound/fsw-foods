@@ -3,12 +3,12 @@
 import { Restaurant, UserFavoriteRestaurants } from "@prisma/client";
 import { BikeIcon, HeartIcon, StarIcon, TimerIcon } from "lucide-react";
 import Image from "next/image";
-import { formatCurrency } from "../_helpers/price";
-import { Button } from "./ui/button";
+import { formatCurrency } from "../../_helpers/price";
+import { Button } from "../ui/button";
 import Link from "next/link";
-import { cn } from "../_lib/utils";
+import { cn } from "../../_lib/utils";
 import { useSession } from "next-auth/react";
-import { toggleFavoriteRestaurant } from "../_actions/restaurants";
+import { toggleFavoriteRestaurant } from "../../_actions/restaurants";
 import { toast } from "sonner";
 
 interface RestaurantItemProps {

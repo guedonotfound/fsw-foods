@@ -1,8 +1,8 @@
 "use client";
 
-import DeliveryInfo from "@/app/_components/delivery-info";
-import DiscountBadge from "@/app/_components/discount-badge";
-import ProductList from "@/app/_components/product-list";
+import DeliveryInfo from "@/app/_components/mobile/delivery-info";
+import DiscountBadge from "@/app/_components/mobile/discount-badge";
+import ProductList from "@/app/_components/mobile/product-list";
 import {
   AlertDialog,
   AlertDialogAction,

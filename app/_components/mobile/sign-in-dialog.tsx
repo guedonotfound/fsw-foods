@@ -1,6 +1,6 @@
 import Image from "next/image";
-import { Button } from "./ui/button";
-import { DialogDescription, DialogHeader, DialogTitle } from "./ui/dialog";
+import { Button } from "../ui/button";
+import { DialogDescription, DialogHeader, DialogTitle } from "../ui/dialog";
 import { signIn } from "next-auth/react";
 
 const SignInDialog = () => {

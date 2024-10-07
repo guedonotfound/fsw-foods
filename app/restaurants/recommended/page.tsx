@@ -1,5 +1,5 @@
-import Header from "@/app/_components/header";
-import RestaurantItem from "@/app/_components/restaurant-item";
+import Header from "@/app/_components/mobile/header";
+import RestaurantItem from "@/app/_components/mobile/restaurant-item";
 import { authOptions } from "@/app/_lib/auth";
 import { db } from "@/app/_lib/prisma";
 import { getServerSession } from "next-auth";

@@ -1,4 +1,4 @@
-import { db } from "../_lib/prisma";
+import { db } from "../../_lib/prisma";
 import CategoryItem from "./category-item";
 
 const CategoryList = async () => {

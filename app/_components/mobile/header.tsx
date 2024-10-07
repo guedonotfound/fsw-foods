@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import {
   HeartIcon,
   HomeIcon,
@@ -18,12 +18,12 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "./ui/sheet";
-import { Avatar, AvatarImage } from "./ui/avatar";
-import { Separator } from "./ui/separator";
+} from "../ui/sheet";
+import { Avatar, AvatarImage } from "../ui/avatar";
+import { Separator } from "../ui/separator";
 import { useRouter } from "next/navigation";
 import SignInDialog from "./sign-in-dialog";
-import { Dialog, DialogContent, DialogTrigger } from "./ui/dialog";
+import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
 
 const Header = () => {
   const router = useRouter();

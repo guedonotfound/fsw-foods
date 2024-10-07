@@ -1,14 +1,14 @@
 "use client";
 
 import { useContext, useState } from "react";
-import { CartContext } from "../_context/cart";
+import { CartContext } from "../../_context/cart";
 import CartItem from "./cart-item";
-import { Card, CardContent } from "./ui/card";
-import { formatCurrency } from "../_helpers/price";
-import { Separator } from "./ui/separator";
-import { Button } from "./ui/button";
+import { Card, CardContent } from "../ui/card";
+import { formatCurrency } from "../../_helpers/price";
+import { Separator } from "../ui/separator";
+import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
-import { createOrder } from "../_actions/order";
+import { createOrder } from "../../_actions/order";
 import { OrderStatus } from "@prisma/client";
 import { useSession } from "next-auth/react";
 import { Loader2 } from "lucide-react";
@@ -21,7 +21,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "./ui/alert-dialog";
+} from "../ui/alert-dialog";
 import { toast } from "sonner";
 
 interface CartProps {
