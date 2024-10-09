@@ -66,8 +66,8 @@ const DesktopRestaurantPage = async ({
     <>
       <Header />
       <div className="my-10 px-[8.89%]">
-        <div className="flex items-start justify-center gap-[2.22%]">
-          <div className="h-[380px] w-[52.08%]">
+        <div className="flex w-full items-start justify-center gap-[2.22%]">
+          <div className="h-[380px] w-[63.34%]">
             <RestaurantImage
               restaurant={restaurant}
               userFavoriteRestaurants={userFavoriteRestaurants}
