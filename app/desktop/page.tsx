@@ -42,7 +42,7 @@ const DesktopHomePage = async () => {
 
   return (
     <div className="mb-10">
-      <Header />
+      <Header isHomePage />
       <div className="space-y-10">
         <MainBanner />
 

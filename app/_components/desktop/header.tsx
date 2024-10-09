@@ -24,8 +24,13 @@ import { Separator } from "../ui/separator";
 import { useRouter } from "next/navigation";
 import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
 import SignInDialog from "../mobile/sign-in-dialog";
+import Search from "./search";
 
-const Header = () => {
+interface HeaderProps {
+  isHomePage?: boolean;
+}
+
+const Header = ({ isHomePage }: HeaderProps) => {
   const router = useRouter();
   const { data } = useSession();
 
@@ -34,12 +39,13 @@ const Header = () => {
   const handleSightOutClick = () => signOut();
 
   return (
-    <div className="flex items-center justify-center gap-[70.35%] py-5">
+    <div className="flex items-center justify-center gap-[14.34%] py-5">
       <Link href="/">
         <div className="relative h-[30px] w-[100px]">
           <Image src="/logo.png" alt="FSW Foods" fill />
         </div>
       </Link>
+      <div className="block w-[41.67%]">{!isHomePage && <Search />}</div>
       <Sheet>
         <SheetTrigger>
           <Button

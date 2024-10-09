@@ -1,20 +1,16 @@
-import { Suspense } from "react";
-import Restaurants from "./_components/restaurants";
-import { getServerSession } from "next-auth";
-import { db } from "../_lib/prisma";
-import { authOptions } from "../_lib/auth";
+import DesktopRestaurantsPage from "./desktop/page";
+import MobileRestaurantsPage from "./mobile/page";
 
-const RestaurantsPage = async () => {
-  const session = await getServerSession(authOptions);
-  const userFavoriteRestaurants = await db.userFavoriteRestaurants.findMany({
-    where: {
-      userId: session?.user.id,
-    },
-  });
+const RestaurantsPage = () => {
   return (
-    <Suspense>
-      <Restaurants userFavoriteRestaurants={userFavoriteRestaurants} />
-    </Suspense>
+    <div>
+      <div className="block 2md:hidden">
+        <MobileRestaurantsPage />
+      </div>
+      <div className="hidden 2md:block">
+        <DesktopRestaurantsPage />
+      </div>
+    </div>
   );
 };
 
