@@ -14,11 +14,7 @@ interface ProductListProps {
 }
 
 const ProductList = ({ products }: ProductListProps) => {
-  return (
-    <div>
-      <ProductsCarousel products={products} delay={5000} />
-    </div>
-  );
+  return <ProductsCarousel products={products} delay={5000} />;
 };
 
 export default ProductList;

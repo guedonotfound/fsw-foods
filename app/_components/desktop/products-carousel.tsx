@@ -30,14 +30,16 @@ const ProductsCarousel = ({ products, delay }: ProductsCarouselProps) => {
       {delay ? (
         <Carousel
           opts={{ align: "start" }}
-          className="px-[8.89%]"
+          className="mx-[8.89%]"
           plugins={[Autoplay({ delay: delay })]}
         >
           <CarouselContent>
             {products.map((product) => (
               <div key={product.id} className="gap-3">
                 <CarouselItem>
-                  <ProductItem key={product.id} product={product} />
+                  <div className="h-[255px] w-[180px]">
+                    <ProductItem key={product.id} product={product} />
+                  </div>
                 </CarouselItem>
               </div>
             ))}
