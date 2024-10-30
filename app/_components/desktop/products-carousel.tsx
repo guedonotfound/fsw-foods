@@ -30,7 +30,6 @@ const ProductsCarousel = ({ products, delay }: ProductsCarouselProps) => {
       {delay ? (
         <Carousel
           opts={{ align: "start" }}
-          className="mx-[8.89%]"
           plugins={[Autoplay({ delay: delay })]}
         >
           <CarouselContent>

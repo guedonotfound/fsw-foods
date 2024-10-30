@@ -57,7 +57,9 @@ const DesktopHomePage = async () => {
             </Link>
           </Button>
         </div>
-        <ProductList products={products} />
+        <div className="mx-[8.89%]">
+          <ProductList products={products} />
+        </div>
         <div className="flex h-[215px] justify-center gap-[1.39%]">
           <PromoBanner
             src="/promo-banner-01.png"
